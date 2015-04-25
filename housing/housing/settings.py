@@ -157,3 +157,9 @@ LOGGING = {
         },
     }
 }
+
+
+MONGODB_BACKEND_SETTINGS = {
+    "host": "localhost",
+    "port": "27017"
+}
