@@ -41,17 +41,13 @@ class MongoBackend(object):
     _words_collection = 'words'
     max_pool_size = 100
     options = None
-
     supports_autoexpire = False
-
     _connection = None
 
-    def __init__(self,database_name=None, *args, **kwargs):
+    def __init__(self, database_name=None, *args, **kwargs):
         """Initialize MongoDB backend instance.
-
         :raises qga.exceptions.ImproperlyConfigured: if
-            module :mod:`pymongo` is not available.
-
+        module :mod:`pymongo` is not available.
         """
         if not pymongo:
             raise ImproperlyConfigured(
@@ -70,12 +66,11 @@ class MongoBackend(object):
             self.password = config.pop('password', self.password)
             self.database_name = config.pop('database', self.database_name)
             self._words_collection = config.pop(
-                'words_collection', self._words_collection,
-            )
+                'words_collection', self._words_collection,)
+            self.options = dict(config, **config.pop('options', None) or {})
             # Set option defaults
             self.options.setdefault('max_pool_size', self.max_pool_size)
             self.options.setdefault('auto_start_request', False)
-            
         url = kwargs.get('url')
         if url:
             # Specifying backend as an URL
